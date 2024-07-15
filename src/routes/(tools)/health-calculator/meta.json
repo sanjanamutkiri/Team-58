@@ -1,9 +1,9 @@
 {
     "name": "Health Calculator",
-    "description":"",
+    "description":"This tool is used to calculate the health of a person based on the inputs provided by the user.",
     "contributors": [{
-        "name": "",
-        "githubId": ""
+        "name": "Yash Mehetre",
+        "githubId": "YashMehetre"
     }, {
         "name": "",
         "githubId": ""
