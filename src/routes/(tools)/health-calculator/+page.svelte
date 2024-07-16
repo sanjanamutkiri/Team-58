@@ -57,6 +57,74 @@
 		  return `Your BMR is ${value}`;
 		},
 	  },
+	  {
+  id: 3,
+  name: "Harris-Benedict",
+  description: "The Harris-Benedict equation estimates your basal metabolic rate (BMR) and daily caloric needs.",
+  tooltip: "The Harris-Benedict equation estimates your basal metabolic rate (BMR) and daily caloric needs.",
+  icon_class: "fas fa-calculator",
+  additional_details: "Range:\n\nVery-Low: BMR is less than 1200\nLow: BMR is 1200 to 1500\nModerate: BMR is 1500 to 1800\nHigh: BMR is 1800 to 2200\nVery-High: BMR is 2200 or more",
+  inputs: [
+    { name: "age", label: "Age (years)", type: "number" },
+    { name: "gender", label: "Gender(M/F)", type: "select", options: ["Male", "Female","male","female"] },
+    { name: "weight", label: "Weight (kg)", type: "number" },
+    { name: "height", label: "Height (cm)", type: "number" },
+  ],
+  calculate: function (inputs) {
+    const age = inputs.age;
+    const weight = inputs.weight;
+    const height = inputs.height;
+    if (inputs.gender === "Male" ||inputs.gender === "male" ) {
+      return (88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)).toFixed(2);
+    } else {
+      return (447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)).toFixed(2);
+    }
+  },
+  result: function (value) {
+    return `Your Harris-Benedict BMR is ${value} calories/day`;
+  },
+},
+{
+  id: 4,
+  name: "Pregnancy Due Date",
+  description: "The Pregnancy Due Date Calculator estimates the due date based on the last menstrual period.",
+  tooltip: "The Pregnancy Due Date Calculator estimates the due date based on the last menstrual period.",
+  icon_class: "fas fa-baby",
+  additional_details: "Due date is calculated as 280 days (40 weeks) from the first day of the last menstrual period.",
+  inputs: [
+    { name: "lmp", label: "Last Menstrual Period", type: "date" },
+  ],
+  calculate: function (inputs) {
+    const lmp = new Date(inputs.lmp);
+    const dueDate = new Date(lmp.getTime() + 280 * 24 * 60 * 60 * 1000);
+    return dueDate.toDateString();
+  },
+  result: function (value) {
+    return `Your estimated due date is ${value}`;
+  },
+  
+},
+{
+  id: 5,
+  name: "Caloric Deficit",
+  description: "Estimates the caloric deficit needed to lose weight.",
+  tooltip: "Estimates the caloric deficit needed to lose weight.",
+  icon_class: "fas fa-weight",
+  additional_details: "A caloric deficit of 500 calories per day typically results in a weight loss of about 0.5 kg (1 lb) per week.",
+  inputs: [
+    { name: "weight_loss_goal", label: "Weight loss goal (kg)", type: "number" },
+    { name: "time_frame", label: "Time frame (weeks)", type: "number" },
+  ],
+  calculate: function (inputs) {
+    const weightLossGoal = inputs.weight_loss_goal;
+    const timeFrame = inputs.time_frame;
+    return (weightLossGoal * 7700 / timeFrame).toFixed(2);
+  },
+  result: function (value) {
+    return `Your daily caloric deficit should be ${value} calories to meet your goal`;
+  },
+}
+
 	];
   
 	let selectedMeasurement = null;
