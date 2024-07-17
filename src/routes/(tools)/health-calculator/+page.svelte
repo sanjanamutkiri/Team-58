@@ -125,6 +125,77 @@
   },
 },
 {
+		id: 7,
+		name: "Ideal Body Weight (IBW)",
+		description:
+		  "IBW is the optimal weight associated with maximum life expectancy for a given height",
+		tooltip:
+		  "IBW is the optimal weight associated with maximum life expectancy for a given height",
+		icon_class: "fas fa-user-check",
+		additional_details:
+		  "Here are some useful tips you can follow to maintain your ideal weight - 1.Stick To a Healthy Diet 2.Exercise 3.Reduce Stress",
+		inputs: [
+		  { name: "height", label: "Height (cm)", type: "number" },
+		  { name: "gender", label: "Gender (M/F)", type: "text" },
+		  { name: "weight", label: "Actual Weight (kg)", type: "number" }
+		],
+		calculate: function (inputs) {
+		  
+		  const height = (inputs.height) / 2.54; // convert cm to inches
+          const gender = inputs.gender.toUpperCase();
+		  let IBW;
+		  if (gender === "M") {
+			IBW = 50+(2.3*(height-60)); }
+			else if (gender === "F") {
+				IBW = 45.5+(2.3*(height-60));
+			} else {
+				IBW = "Invalid Gender";
+			}
+			return (IBW).toFixed(2);
+		  },
+		  result: function (value) {
+		  return `Your IBW is ${value} kg`;
+		},
+		},
+		{
+		id: 8,
+		name: "Lean Body Mass",
+		description:
+		  "Lean body mass (LBM) refers to the weight of everything in your body except for fat",
+		tooltip:
+		  "Lean body mass (LBM) refers to the weight of everything in your body except for fat",
+		icon_class: "fas fa-dumbbell",
+		additional_details:
+		  "Increasing LBM often implies gaining muscle mass or losing fat, which is a common goal in fitness and bodybuilding!",
+		inputs: [
+		  { name: "height", label: "Height (cm)", type: "number" },
+		  { name: "weight", label: "Actual Weight (kg)", type: "number" },
+		  { name: "gender", label: "Gender (M/F)", type: "text" }
+		  
+		],
+		calculate: function (inputs) {
+		  
+		  const height = inputs.height; 
+          const gender = inputs.gender.toUpperCase();
+		  const weight = inputs.weight;
+
+		  let LBM;
+		  if (gender === "M") {
+			LBM = 0.407*weight+0.267*height-19.2; }
+			else if (gender === "F") {
+				LBM = 0.252*weight+0.473*height-48.3;
+			} else {
+				LBM = "Invalid Gender";
+			}
+			return (LBM).toFixed(2);
+		  },
+		  result: function (value) {
+		  return `Your Lean Body Mass is ${value} kg`;
+		},
+		},
+
+
+{
   id: 12,
   name: "Vitamin Calculator",
   description: "Estimates daily vitamin intake requirements based on age and gender.",
