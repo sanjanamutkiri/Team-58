@@ -104,6 +104,7 @@
   },
   
 },
+
 {
   id: 5,
   name: "Caloric Deficit",
@@ -181,6 +182,27 @@
 		  return `Your RMR is ${value} calories/day`;
 		},
 	  },
+	  {
+  id: 11,
+  name: "Menstrual Cycle",
+  description: "The Menstrual Cycle Calculator estimates the next period date based on the last menstrual period and average cycle length.",
+  tooltip: "The Menstrual Cycle Calculator estimates the next period date based on the last menstrual period and average cycle length.",
+  icon_class: "fas fa-calendar-alt",
+  additional_details: "Next period is estimated based on the average menstrual cycle length from the start date of the last period.",
+  inputs: [
+    { name: "lmp", label: "Last Menstrual Period", type: "date" },
+    { name: "cycleLength", label: "Average Cycle Length (days)", type: "number" }
+  ],
+  calculate: function (inputs) {
+    const lmp = new Date(inputs.lmp);
+    const cycleLength = parseInt(inputs.cycleLength);
+    const nextPeriodDate = new Date(lmp.getTime() + cycleLength * 24 * 60 * 60 * 1000);
+    return nextPeriodDate.toDateString();
+  },
+  result: function (value) {
+    return `Your next period is expected to start on ${value}`;
+  }
+},
 	];
 
 	let selectedMeasurement = null;
