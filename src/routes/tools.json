@@ -374,7 +374,7 @@
     "health-calculator": {
         "name": "Health Calculator",
         "link": "/health-calculator",
-        "description": "This tool is used to calculate the health of a person based on the inputs provided by the user.",
+        "description": "This tool is used to calculate the various parameters to check the health of a person based on the inputs provided by the user.",
         "contributors": [
             {
                 "name": "Yash Mehetre",
@@ -389,8 +389,8 @@
                 "githubId": "Omkar-K01"
             },
             {
-                "name": "",
-                "githubId": ""
+                "name": "Rohit Jagtap",
+                "githubId": "RohitJagtap123"
             },
             {
                 "name": "",
