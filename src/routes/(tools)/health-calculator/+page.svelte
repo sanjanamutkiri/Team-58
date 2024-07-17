@@ -123,10 +123,66 @@
   result: function (value) {
     return `Your daily caloric deficit should be ${value} calories to meet your goal`;
   },
-}
-
+},
+	{
+		id: 13,
+		name: "Waist to Hip Ratio (WHR)",
+		description:
+		  "The waist-to-hip ratio (WHR) is the ratio of the circumference of the waist to that of the hips (a quick measure of fat distribution).",
+		tooltip:
+		  "The waist-hip ratio is generally a measure of health and the risk of developing serious health conditions, such as diabetes, asthma or cardiovascular disease.",
+		icon_class: "fas fa-ruler",
+		additional_details:
+		  "A Waist-Hip Ratio of 0.9 or less in men and 0.85 or less in women is considered low risk. A WHR above 1.0 in men and 0.85 in women indicates high risk.",
+		inputs: [
+		  { name: "waist", label: "Waist Circumference (cm)", type: "number" },
+		  { name: "hip", label: "Hip Circumference (cm)", type: "number" },
+		],
+		calculate: function (inputs) {
+		  const waist = inputs.waist;
+		  const hip = inputs.hip;
+		  return (waist / hip).toFixed(2);
+		},
+		result: function (value) {
+		  return `Your Waist-Hip Ratio is ${value}`;
+		},
+	  },
+	  {
+		id: 14,
+		name: "Resting Metabolic Rate (RMR)",
+		description:
+		  "Resting Metabolic Rate (RMR) is the rate at which your body burns energy when it is at complete rest.",
+		tooltip: "RMR is similar to BMR but can be slightly higher as it accounts for the calories burned by activities such as eating and small movements.",
+		icon_class: "fas fa-heartbeat",
+		additional_details:
+		  "RMR is the abbreviation of resting metabolic rate. This parameter tells how many calories your body requires to perform the most basic functions (to keep itself alive) while resting.",
+		inputs: [
+		  { name: "weight", label: "Weight (kg)", type: "number" },
+		  { name: "height", label: "Height (cm)", type: "number" },
+		  { name: "age", label: "Age (years)", type: "number" },
+		  { name: "gender", label: "Gender (M/F)", type: "text" },
+		],
+		calculate: function (inputs) {
+		  const weight = inputs.weight;
+		  const height = inputs.height;
+		  const age = inputs.age;
+		  const gender = inputs.gender.toUpperCase();
+		  let rmr;
+		  if (gender === "M") {
+			rmr = 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age;
+		  } else if (gender === "F") {
+			rmr = 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age;
+		  } else {
+			rmr = "Invalid gender";
+		  }
+		  return (rmr * 1.1).toFixed(2); // Slightly higher than BMR to account for calories utilized for food digestion. 
+		},
+		result: function (value) {
+		  return `Your RMR is ${value} calories/day`;
+		},
+	  },
 	];
-  
+
 	let selectedMeasurement = null;
 	let result = "";
   
