@@ -381,22 +381,37 @@
                 "githubId": "YashMehetre"
             },
             {
-                "name": "Prajwal Ganar",
-                "githubId": "Prajwal435"
-            },
-            {
-                "name": "Omkar Karlekar",
-                "githubId": "Omkar-K01"
-            },
-            {
-                "name": "Rohit Jagtap",
-                "githubId": "RohitJagtap123"
-            },
-            {
-                "name": "Prerana Patil",
-                "githubId": "Prerana-Patil1"
-            }
-        ]
+        "name": "Prajwal Ganar",
+        "githubId": "Prajwal435"
+    },
+    {
+        "name": "Omkar Karlekar",
+        "githubId": "Omkar-K01"
+    },
+    {
+        "name": "Rohit Jagtap",
+        "githubId": "RohitJagtap123"
+    },
+    {
+        "name": "Akanksha Kumbhar",
+        "githubId": "Akanksha0830"
+    },
+    {
+        "name": "Om Borle",
+        "githubId": "omborle"
+    },
+    {
+        "name": "Sanika Kundekar",
+        "githubId": "meSanika07"
+    },
+    {
+        "name": "Siddharth Mondal",
+        "githubId": "siddharth-coder-droid"
+    },
+    {
+        "name": "Prerana Patil",
+        "githubId": "Prerana-Patil1"
+    }]
     },
     "image-base64-decode": {
         "name": "Image Base64 Decode",

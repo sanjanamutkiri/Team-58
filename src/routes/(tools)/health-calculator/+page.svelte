@@ -104,6 +104,7 @@
   },
   
 },
+
 {
   id: 5,
   name: "Caloric Deficit",
@@ -124,6 +125,119 @@
     return `Your daily caloric deficit should be ${value} calories to meet your goal`;
   },
 },
+
+{
+	id: 9,
+	name: "Body Fat Percentage",
+	description: "A body fat percentage calculator estimates the proportion of fat in relation to total body weight based on measurements like height, weight, and circumference of specific body parts.",
+	tooltip: "The U.S. Navy method estimates body fat percentage using measurements of waist, neck, weight, height, age, and gender, with hip circumference optionally included for women.",
+	icon_class: "fas fa-percent",
+	additional_details: "The normal range for body fat percentage varies based on factors like age, gender, and fitness level, but generally, it's around 18-24% for women and 10-17% for men",
+	inputs: [
+		{ name: "weight", label: "Weight (kg)", type: "number" },
+		{ name: "height", label: "Height (cm)", type: "number" },
+		{ name: "waist", label: "Waist (cm)", type: "number" },
+		{ name: "neck", label: "Neck (cm)", type: "number" },
+		{ name: "hip", label: "Hip (cm)", type: "number" },
+		{ name: "age", label: "Age (years)", type: "number" },
+		{ name: "gender", label: "Gender (M/F)", type: "text" },
+	],
+	calculate: function (inputs) {
+		const weight = inputs.weight;
+		const height = inputs.height;
+		const waist = inputs.waist;
+  		const neck = inputs.neck;
+      	const hip = inputs.hip;
+		const age = inputs.age;
+		const gender = inputs.gender.toUpperCase();
+		let bodyFatPercentage;
+		  if (gender === "M") {
+			bodyFatPercentage = 86.010 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+		  } else if (gender === "F") {
+			bodyFatPercentage = 163.205 * Math.log10(waist + hip - neck) - 97.684 * Math.log10(height) - 78.387;
+		  } else {
+			bodyFatPercentage = "Invalid gender";
+		  }
+		  return bodyFatPercentage.toFixed(2);
+		},
+		result: function (value) {
+		  return `Your Body Fat Percentage is ${value}`;
+		},
+	},
+  
+{
+  id: 10,
+  name: "Daily Caloric Needs",
+  description: "Estimates your daily caloric needs based on your Basal Metabolic Rate (BMR) and activity level. Activity levels can be Sedentary, Lightly active, Moderately active, Very active, Super active",
+  tooltip: "Estimates your daily caloric needs based on your Basal Metabolic Rate (BMR) and activity level.",
+  icon_class: "fas fa-utensils",
+  additional_details: 
+    "Activity Level Multipliers:\n\n" +
+    "Sedentary (little or no exercise): BMR x 1.2\n" +
+    "Lightly active (light exercise/sports 1-3 days/week): BMR x 1.375\n" +
+    "Moderately active (moderate exercise/sports 3-5 days/week): BMR x 1.55\n" +
+    "Very active (hard exercise/sports 6-7 days a week): BMR x 1.725\n" +
+    "Super active (very hard exercise/sports & a physical job): BMR x 1.9\n\n" +
+    "Your BMR is calculated using the Harris-Benedict equation:\n" +
+    "For males: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) - (5.677 x age in years)\n" +
+    "For females: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) - (4.330 x age in years)",
+  inputs: [
+    { name: "age", label: "Age (years)", type: "number" },
+    { name: "gender", label: "Gender (M/F)", type: "select", options: ["Male", "Female"] },
+    { name: "weight", label: "Weight (kg)", type: "number" },
+    { name: "height", label: "Height (cm)", type: "number" },
+    { 
+      name: "activity_level", 
+      label: "Activity Level", 
+      type: "select", 
+      options: ["Sedentary", "Lightly active", "Moderately active", "Very active", "Super active"] 
+    },
+  ],
+  calculate: function (inputs) {
+    const age = inputs.age;
+    const weight = inputs.weight;
+    const height = inputs.height;
+    const gender = inputs.gender.toUpperCase();
+    const activityLevel = inputs.activity_level;
+
+    let bmr;
+
+    if (gender === "M") {
+      bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+    } else if (gender === "F") {
+      bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+    } else {
+      return "Invalid gender";
+    }
+
+    let caloricNeeds;
+    switch (activityLevel) {
+      case "Sedentary":
+        caloricNeeds = bmr * 1.2;
+        break;
+      case "Lightly active":
+        caloricNeeds = bmr * 1.375;
+        break;
+      case "Moderately active":
+        caloricNeeds = bmr * 1.55;
+        break;
+      case "Very active":
+        caloricNeeds = bmr * 1.725;
+        break;
+      case "Super active":
+        caloricNeeds = bmr * 1.9;
+        break;
+      default:
+        return "Invalid activity level";
+    }
+
+    return caloricNeeds.toFixed(2);
+  },
+  result: function (value) {
+    return `Your daily caloric needs are ${value} calories`;
+  },
+},
+
 {
 		id: 7,
 		name: "Ideal Body Weight (IBW)",
@@ -316,6 +430,88 @@
 		  return `Your RMR is ${value} calories/day`;
 		},
 	  },
+	  {
+  id: 11,
+  name: "Menstrual Cycle",
+  description: "The Menstrual Cycle Calculator estimates the next period date based on the last menstrual period and average cycle length.",
+  tooltip: "The Menstrual Cycle Calculator estimates the next period date based on the last menstrual period and average cycle length.",
+  icon_class: "fas fa-calendar-alt",
+  additional_details: "Next period is estimated based on the average menstrual cycle length from the start date of the last period.",
+  inputs: [
+    { name: "lmp", label: "Last Menstrual Period", type: "date" },
+    { name: "cycleLength", label: "Average Cycle Length (days)", type: "number" }
+  ],
+  calculate: function (inputs) {
+    const lmp = new Date(inputs.lmp);
+    const cycleLength = parseInt(inputs.cycleLength);
+    const nextPeriodDate = new Date(lmp.getTime() + cycleLength * 24 * 60 * 60 * 1000);
+    return nextPeriodDate.toDateString();
+  },
+  result: function (value) {
+    return `Your next period is expected to start on ${value}`;
+  }
+},
+
+{
+  id: 15,
+  name: "Heart Rate Zone",
+  description:
+    "Heart Rate Zone is a percentage of your maximum heart rate, which is used to determine the intensity of exercise.",
+  tooltip: "The Karvonen formula is used to calculate Heart Rate Zone.",
+  icon_class: "fas fa-heartbeat" ,
+  additional_details:
+    "",
+  inputs: [
+    { name: "age", label: "Age (years)", type: "number" },
+    { name: "gender", label: "Gender (male/female)", type: "select", options: ["male", "female"] },
+    { name: "resting_hr", label: "Resting Heart Rate (bpm)", type: "number" },
+  ],
+  calculate: function (inputs) {
+    const age = inputs.age;
+    const gender = inputs.gender;
+    const resting_hr = inputs.resting_hr;
+
+    // Calculate maximum heart rate using Karvonen formula
+    let max_hr;
+    if (gender === "male") {
+      max_hr = 220 - age;
+    } else {
+      max_hr = 226 - age;
+    }
+
+    // Calculate heart rate reserve
+    let heart_rate_reserve = max_hr - resting_hr;
+
+    // Calculate targeted heart zone rates
+    let warm_up_zone = (max_hr - heart_rate_reserve) * 0.5 + resting_hr;
+    let fat_burn_zone = (max_hr - heart_rate_reserve) * 0.6 + resting_hr;
+    let aerobic_zone = (max_hr - heart_rate_reserve) * 0.7 + resting_hr;
+    let anaerobic_zone = (max_hr - heart_rate_reserve) * 0.8 + resting_hr;
+    let vo2_max_zone = (max_hr - heart_rate_reserve) * 0.9 + resting_hr;
+
+    return {
+      max_hr: max_hr.toFixed(2),
+      warm_up_zone: warm_up_zone.toFixed(2),
+      fat_burn_zone: fat_burn_zone.toFixed(2),
+      aerobic_zone: aerobic_zone.toFixed(2),
+      anaerobic_zone: anaerobic_zone.toFixed(2),
+      vo2_max_zone: vo2_max_zone.toFixed(2),
+    };
+  },
+  result: function (values) {
+    return `
+      Heart Rate Zones:
+
+      •Maximum Heart Rate:${values.max_hr} bpm 
+      •Warm-up Zone:${values.warm_up_zone} bpm
+      •Fat Burn Zone:${values.fat_burn_zone} bpm
+      •Aerobic Zone:${values.aerobic_zone} bpm
+      •Anaerobic Zone: ${values.anaerobic_zone} bpm
+      •VO2 Max Zone: ${values.vo2_max_zone} bpm
+    `;
+  },
+},
+
 	];
 
 	let selectedMeasurement = null;
